@@ -1,5 +1,8 @@
-package com.anddevlab.roomrxandroidexample.ui;
+package com.anddevlab.roomrxandroidexample.ui.auth;
 
+import android.arch.lifecycle.LifecycleActivity;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +14,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.anddevlab.roomrxandroidexample.R;
+import com.anddevlab.roomrxandroidexample.presistence.Injection;
 
-public class AuthActivity extends AppCompatActivity {
-
+public class AuthActivity extends LifecycleActivity {
+  private static final String TAG = AuthActivity.class.getSimpleName();
 
   @BindView(R.id.login_progress)
   ProgressBar loginProgress;
@@ -33,12 +37,16 @@ public class AuthActivity extends AppCompatActivity {
   EditText etPass;
   @BindView(R.id.lytRegister)
   LinearLayout lytRegister;
-
+  private UserViewModel userViewModel;
+  private UserViewModelFactory userViewModelFactory;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
+    userViewModelFactory = Injection.ProvideUserViewModelFactory(this);
+    userViewModel = ViewModelProviders.of(this,userViewModelFactory).get(UserViewModel.class);
+
 
   }
 

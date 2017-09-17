@@ -29,7 +29,12 @@ public class User {
   @Ignore
   public User(String name){
     uid = UUID.randomUUID().toString();
-    name = name;
+    this.name = name;
+  }
+
+  public User(String uid, String name) {
+    this.uid = uid;
+    this.name = name;
   }
 
   public String getUid() {
